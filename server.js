@@ -15,9 +15,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.get('/', (req, res) => {
+  res.send('¡Bienvenido a la API de libros y categorías!');
+});
 // Documentación Swagger
 app.use('/api-docs', swaggerRoutes);
-
 // Rutas
 app.use('/api', routes);
 
