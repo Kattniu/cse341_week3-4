@@ -1,13 +1,16 @@
 const swaggerAutogen = require('swagger-autogen')();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const doc = {
   info: {
     title: 'API de Categorías y Libros',
     description: 'Una API para gestionar libros y categorías',
   },
-  host: 'localhost:8080',
-  schemes: ['http'],
+  host: isProduction ? 'cse341-week3-4-x3g1.onrender.com' : 'localhost:8080',
+  schemes: [isProduction ? 'https' : 'http'],
 };
+
 
 const outputFile = './swagger.json';
 const endpointsFiles = ['./routes/index.js']; // Tus archivos de rutas que contienen las anotaciones de Swagger
