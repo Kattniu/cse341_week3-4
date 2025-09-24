@@ -5,10 +5,10 @@
     "description": "Una API para gestionar libros y categorías",
     "version": "1.0.0"
   },
-  "host": "localhost:8080",
+  "host": "cse341-week3-4-x3g1.onrender.com",
   "basePath": "/api",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
     "/": {

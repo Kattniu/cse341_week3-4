@@ -1,6 +1,6 @@
 const swaggerAutogen = require('swagger-autogen')();
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = true; // Fuerza producción
 
 const doc = {
   info: {
@@ -8,7 +8,7 @@ const doc = {
     description: 'Una API para gestionar libros y categorías',
   },
   host: isProduction ? 'cse341-week3-4-x3g1.onrender.com' : 'localhost:8080',
-  basePath: '/api', // ✅ IMPORTANTE: para que las rutas sean correctas
+  basePath: '/api',
   schemes: [isProduction ? 'https' : 'http'],
 };
 
@@ -17,9 +17,9 @@ const endpointsFiles = ['./routes/index.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc)
   .then(() => {
-    console.log('Swagger file generated successfully!');
-    require('./server.js'); // Arrancar el servidor después de generar Swagger
+    console.log('✅ Swagger generado con host de producción');
+    require('./server.js');
   })
   .catch((err) => {
-    console.log('Error generando swagger.json:', err);
+    console.error('❌ Error generando swagger.json:', err);
   });
