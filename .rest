@@ -1,0 +1,77 @@
+### Obtener todos los libros
+GET http://localhost:8080/api/books
+Accept: application/json
+
+###
+
+### Crear un libro nuevo (debes usar un ObjectId válido para category)
+POST http://localhost:8080/api/books
+Content-Type: application/json
+
+{
+  "title": "El Principito",
+  "author": "Antoine de Saint-Exupéry",
+  "category": "64fa123456789abcdef12345",  // Reemplaza por un ID válido de tu colección categories
+  "year": 1943,
+  "price": 15.99
+}
+
+###
+
+### Obtener un libro por id (reemplaza :id)
+GET http://localhost:8080/api/books/:id
+Accept: application/json
+
+###
+
+### Actualizar un libro por id (reemplaza :id)
+PUT http://localhost:8080/api/books/:id
+Content-Type: application/json
+
+{
+  "title": "El Principito (edición especial)",
+  "price": 17.99
+}
+
+###
+
+### Eliminar un libro por id (reemplaza :id)
+DELETE http://localhost:8080/api/books/:id
+
+###
+
+### Obtener todas las categorías
+GET http://localhost:8080/api/categories
+Accept: application/json
+
+###
+
+### Crear una categoría nueva
+POST http://localhost:8080/api/categories
+Content-Type: application/json
+
+{
+  "name": "Literatura Infantil",
+  "description": "Libros para niños y jóvenes"
+}
+
+###
+
+### Obtener una categoría por id (reemplaza :id)
+GET http://localhost:8080/api/categories/:id
+Accept: application/json
+
+###
+
+### Actualizar una categoría por id (reemplaza :id)
+PUT http://localhost:8080/api/categories/:id
+Content-Type: application/json
+
+{
+  "description": "Libros para todas las edades infantiles"
+}
+
+###
+
+### Eliminar una categoría por id (reemplaza :id)
+DELETE http://localhost:8080/api/categories/:id
