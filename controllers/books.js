@@ -21,11 +21,9 @@ const getAllBooks = async (req, res) => {
 
     res.status(200).json(cleanedBooks);
   } catch (err) {
-    res.status(500).json({ message: 'Error al obtener los libros', error: err.message });
+    res.status(500).json({ message: 'Error retrieving books', error: err.message });
   }
 };
-
-
 
 // ====================================================
 // GET /api/books/:id — Obtener un libro por ID
@@ -34,11 +32,11 @@ const getBookById = async (req, res) => {
   try {
     const book = await Book.findById(req.params.id).populate('category');
     if (!book) {
-      return res.status(404).json({ message: 'Libro no encontrado' });
+      return res.status(404).json({ message: 'Book not found' });
     }
     res.status(200).json(book.toJSON());
   } catch (err) {
-    res.status(500).json({ message: 'Error al obtener el libro', error: err.message });
+    res.status(500).json({ message: 'Error retrieving the book', error: err.message });
   }
 };
 
@@ -50,14 +48,14 @@ const createBook = async (req, res) => {
 
   // Validación básica de campos requeridos
   if (!title || !author || !category || !year || !price) {
-    return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+    return res.status(400).json({ message: 'All fields are required' });
   }
 
   try {
     // Validar que la categoría exista
     const categoryExists = await Category.findById(category);
     if (!categoryExists) {
-      return res.status(400).json({ message: 'La categoría especificada no existe' });
+      return res.status(400).json({ message: 'The specified category does not exist' });
     }
 
     // Crear el libro
@@ -66,7 +64,7 @@ const createBook = async (req, res) => {
 
     res.status(201).json(savedBook.toJSON());
   } catch (err) {
-    res.status(500).json({ message: 'Error al crear el libro', error: err.message });
+    res.status(500).json({ message: 'Error creating the book', error: err.message });
   }
 };
 
@@ -82,7 +80,7 @@ const updateBook = async (req, res) => {
     if (category) {
       const categoryExists = await Category.findById(category);
       if (!categoryExists) {
-        return res.status(400).json({ message: 'La categoría especificada no existe' });
+        return res.status(400).json({ message: 'The specified category does not exist' });
       }
     }
 
@@ -94,12 +92,12 @@ const updateBook = async (req, res) => {
     );
 
     if (!updatedBook) {
-      return res.status(404).json({ message: 'Libro no encontrado' });
+      return res.status(404).json({ message: 'Book not found' });
     }
 
     res.status(200).json(updatedBook.toJSON());
   } catch (err) {
-    res.status(500).json({ message: 'Error al actualizar el libro', error: err.message });
+    res.status(500).json({ message: 'Error updating the book', error: err.message });
   }
 };
 
@@ -111,12 +109,12 @@ const deleteBook = async (req, res) => {
     const deletedBook = await Book.findByIdAndDelete(req.params.id);
 
     if (!deletedBook) {
-      return res.status(404).json({ message: 'Libro no encontrado' });
+      return res.status(404).json({ message: 'Book not found' });
     }
 
-    res.status(200).json({ message: 'Libro eliminado con éxito' });
+    res.status(200).json({ message: 'Book successfully deleted' });
   } catch (err) {
-    res.status(500).json({ message: 'Error al eliminar el libro', error: err.message });
+    res.status(500).json({ message: 'Error deleting the book', error: err.message });
   }
 };
 

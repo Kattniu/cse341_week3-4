@@ -9,7 +9,7 @@ exports.getAllCategories = async (req, res) => {
     const categories = await Category.find(); // Busca todas las categorías en la base de datos
     res.status(200).json(categories.map(c => c.toJSON())); // Retorna el resultado como JSON sin __v
   } catch (err) {
-    res.status(500).json({ message: 'Error al obtener las categorías' });
+    res.status(500).json({ message: 'Error retrieving categories' });
   }
 };
 
@@ -21,19 +21,19 @@ exports.getCategoryById = async (req, res) => {
 
   // Validación básica del ID (formato MongoDB)
   if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-    return res.status(400).json({ message: 'ID de categoría no válido' });
+    return res.status(400).json({ message: 'Invalid category ID' });
   }
 
   try {
     const category = await Category.findById(id); // Buscar categoría por ID
 
     if (!category) {
-      return res.status(404).json({ message: 'Categoría no encontrada' });
+      return res.status(404).json({ message: 'Category not found' });
     }
 
     res.status(200).json(category.toJSON()); // Retornar la categoría
   } catch (err) {
-    res.status(500).json({ message: 'Error al obtener la categoría' });
+    res.status(500).json({ message: 'Error retrieving the category' });
   }
 };
 
@@ -45,7 +45,7 @@ exports.createCategory = async (req, res) => {
 
   // Validar que se incluya el nombre
   if (!name) {
-    return res.status(400).json({ message: 'El nombre de la categoría es obligatorio' });
+    return res.status(400).json({ message: 'Category name is required' });
   }
 
   try {
@@ -58,7 +58,7 @@ exports.createCategory = async (req, res) => {
     // Enviar respuesta exitosa
     res.status(201).json(newCategory);
   } catch (err) {
-    res.status(500).json({ message: 'Error al crear la categoría' });
+    res.status(500).json({ message: 'Error creating the category' });
   }
 };
 
@@ -71,12 +71,12 @@ exports.updateCategory = async (req, res) => {
 
   // Validar formato del ID
   if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-    return res.status(400).json({ message: 'ID de categoría no válido' });
+    return res.status(400).json({ message: 'Invalid category ID' });
   }
 
   // Validar campo obligatorio
   if (!name) {
-    return res.status(400).json({ message: 'El nombre de la categoría es obligatorio' });
+    return res.status(400).json({ message: 'Category name is required' });
   }
 
   try {
@@ -88,12 +88,12 @@ exports.updateCategory = async (req, res) => {
     );
 
     if (!updatedCategory) {
-      return res.status(404).json({ message: 'Categoría no encontrada' });
+      return res.status(404).json({ message: 'Category not found' });
     }
 
     res.status(200).json(updatedCategory.toJSON());
   } catch (err) {
-    res.status(500).json({ message: 'Error al actualizar la categoría' });
+    res.status(500).json({ message: 'Error updating the category' });
   }
 };
 
@@ -105,18 +105,18 @@ exports.deleteCategory = async (req, res) => {
 
   // Validar el ID
   if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-    return res.status(400).json({ message: 'ID de categoría no válido' });
+    return res.status(400).json({ message: 'Invalid category ID' });
   }
 
   try {
     const deletedCategory = await Category.findByIdAndDelete(id);
 
     if (!deletedCategory) {
-      return res.status(404).json({ message: 'Categoría no encontrada' });
+      return res.status(404).json({ message: 'Category not found' });
     }
 
-    res.status(200).json({ message: 'Categoría eliminada exitosamente' });
+    res.status(200).json({ message: 'Category successfully deleted' });
   } catch (err) {
-    res.status(500).json({ message: 'Error al eliminar la categoría' });
+    res.status(500).json({ message: 'Error deleting the category' });
   }
 };

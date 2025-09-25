@@ -1,11 +1,11 @@
 const swaggerAutogen = require('swagger-autogen')();
 
-const isProduction = true; // Fuerza producción
+const isProduction = true; // force/fuerza a producción
 
 const doc = {
   info: {
-    title: 'API de Categorías y Libros',
-    description: 'Una API para gestionar libros y categorías',
+    title: 'Categories and Books API',
+    description: 'An API to manage books and categories',
   },
   host: isProduction ? 'cse341-week3-4-x3g1.onrender.com' : 'localhost:8080',
   basePath: '/api',
@@ -17,9 +17,9 @@ const endpointsFiles = ['./routes/index.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc)
   .then(() => {
-    console.log('✅ Swagger generado con host de producción');
+    console.log('✅ Swagger generated with production host');
     require('./server.js');
   })
   .catch((err) => {
-    console.error('❌ Error generando swagger.json:', err);
+    console.error('❌ Error generating swagger.json:', err);
   });

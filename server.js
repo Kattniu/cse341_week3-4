@@ -1,14 +1,14 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const connectDB = require('./db/connect'); // Usas tu archivo limpio
+const connectDB = require('./db/connect'); // Use your clean DB file
 const routes = require('./routes');
 const swaggerRoutes = require('./routes/swagger');
 
-// Cargar variables de entorno
+// Load environment variables
 dotenv.config();
 
-// Crear aplicación Express
+// Create Express application
 const app = express();
 
 // Middlewares
@@ -16,20 +16,20 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-  res.send('¡Bienvenido a la API de libros y categorías!');
+  res.send('Welcome to the Books and Categories API!');
 });
-// Documentación Swagger
+// Swagger documentation
 app.use('/api-docs', swaggerRoutes);
-// Rutas
+// Routes
 app.use('/api', routes);
 
-// Conectar a MongoDB y arrancar el servidor
+// Connect to MongoDB and start server
 const PORT = process.env.PORT || 8080;
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`🫡 Servidor corriendo en el puerto ${PORT} 🚀`);
+    console.log(`🫡 Server running on port ${PORT} 🚀`);
   });
 }).catch((err) => {
-  console.error('❌ No se pudo conectar a la base de datos:', err);
+  console.error('❌ Failed to connect to the database:', err);
 });

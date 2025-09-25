@@ -3,26 +3,26 @@ const mongoose = require('mongoose');
 const bookSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [true, 'El título es obligatorio'],
+    required: [true, 'Title is required'],
   },
   author: {
     type: String,
-    required: [true, 'El autor es obligatorio'],
+    required: [true, 'Author is required'],
   },
- category: {
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'Category',
-  required: [true, 'La categoría es obligatoria'],
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    required: [true, 'Category is required'],
   },
   year: {
-  type: Number,
-  required: [true, 'El año es obligatorio'],
+    type: Number,
+    required: [true, 'Year is required'],
   },
   price: {
-  type: Number,
-  required: [true, 'El precio es obligatorio'],
-  min: [0, 'El precio no puede ser negativo'],
-},
+    type: Number,
+    required: [true, 'Price is required'],
+    min: [0, 'Price cannot be negative'],
+  },
 });
 
 // Eliminar el campo __v en las respuestas JSON
@@ -32,8 +32,6 @@ bookSchema.set('toJSON', {
     return ret;
   }
 });
-
-
 
 const Book = mongoose.model('Book', bookSchema);
 module.exports = Book;
