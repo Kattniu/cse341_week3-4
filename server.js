@@ -1,31 +1,56 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const connectDB = require('./db/connect'); // Use your clean DB file
-const routes = require('./routes');
-const swaggerRoutes = require('./routes/swagger');
+const session = require('express-session');
+const passport = require('passport');
 
-// Load environment variables
+// Cargar variables de entorno
 dotenv.config();
 
-// Create Express application
+// Importar módulos
+const connectDB = require('./db/connect');
+const routes = require('./routes'); // tus rutas normales (/books, /categories, etc.)
+const swaggerRoutes = require('./routes/swagger');
+const authRoutes = require('./routes/auth'); // 👈 tus rutas de autenticación
+require('./auth/passport'); // 👈 configura la estrategia de GitHub aquí
+
+// Crear app
 const app = express();
 
-// Middlewares
+// Middlewares generales
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:8080', 
+  credentials: true
+}));
 
+// Configurar express-session (requerido para Passport)
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
+
+// Inicializar Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Ruta raíz
 app.get('/', (req, res) => {
-  res.send('Welcome to the Books and Categories API!');
+  res.send('Welcome to the Books and Categories API with OAuth!');
 });
-// Swagger documentation
+
+// Swagger Docs
 app.use('/api-docs', swaggerRoutes);
-// Routes
+
+// Rutas protegidas de tu API
 app.use('/api', routes);
 
-// Connect to MongoDB and start server
-const PORT = process.env.PORT || 8080;
+// Rutas de autenticación
+app.use('/auth', authRoutes);
 
+// Conectar a MongoDB y levantar servidor
+const PORT = process.env.PORT || 8080;
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`🫡 Server running on port ${PORT} 🚀`);

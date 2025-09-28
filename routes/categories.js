@@ -1,18 +1,15 @@
-// routes/categories.js
 const express = require('express');
 const router = express.Router();
 const categoriesController = require('../controllers/categories');
+const isAuthenticated = require('../middleware/isAuthenticated'); // <-- Importa el middleware
 
-// Ruta GET: Obtener todas las categorías
+// Rutas públicas (GET)
 router.get('/', categoriesController.getAllCategories);
-//Ruta GET: Obtener una categoría por ID
 router.get('/:id', categoriesController.getCategoryById);
 
-// Ruta POST: Crear una nueva categoría
-router.post('/', categoriesController.createCategory);
-
-// Rutas PUT y DELETE para actualizar y eliminar categorías por ID
-router.put('/:id', categoriesController.updateCategory);
-router.delete('/:id', categoriesController.deleteCategory);
+// Rutas protegidas (POST, PUT, DELETE)
+router.post('/', isAuthenticated, categoriesController.createCategory);
+router.put('/:id', isAuthenticated, categoriesController.updateCategory);
+router.delete('/:id', isAuthenticated, categoriesController.deleteCategory);
 
 module.exports = router;

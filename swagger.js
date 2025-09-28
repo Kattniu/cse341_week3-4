@@ -1,6 +1,6 @@
 const swaggerAutogen = require('swagger-autogen')();
 
-const isProduction = true; // force/fuerza a producción
+const isProduction = true;
 
 const doc = {
   info: {
@@ -10,6 +10,22 @@ const doc = {
   host: isProduction ? 'cse341-week3-4-x3g1.onrender.com' : 'localhost:8080',
   basePath: '/api',
   schemes: [isProduction ? 'https' : 'http'],
+
+  // 👇 AÑADIR AQUÍ la parte de seguridad
+  components: {
+    securitySchemes: {
+      githubAuth: {
+        type: 'apiKey',
+        in: 'cookie',
+        name: 'connect.sid'
+      }
+    }
+  },
+  security: [
+    {
+      githubAuth: []
+    }
+  ]
 };
 
 const outputFile = './swagger.json';

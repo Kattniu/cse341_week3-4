@@ -1,21 +1,15 @@
-// routes/books.js
 const express = require('express');
 const router = express.Router();
 const booksController = require('../controllers/books');
+const isAuthenticated = require('../middleware/isAuthenticated'); // <-- Importa el middleware
 
-// Ruta GET: Obtener todos los libros
+// Rutas públicas (GET)
 router.get('/', booksController.getAllBooks);
-
-// Ruta GET: Obtener un libro por su ID
 router.get('/:id', booksController.getBookById);
 
-// Ruta POST: Crear un nuevo libro
-router.post('/', booksController.createBook);
-
-// Ruta PUT: Actualizar un libro por su ID
-router.put('/:id', booksController.updateBook);
-
-// Ruta DELETE: Eliminar un libro por su ID
-router.delete('/:id', booksController.deleteBook);
+// Rutas protegidas (POST, PUT, DELETE)
+router.post('/', isAuthenticated, booksController.createBook);
+router.put('/:id', isAuthenticated, booksController.updateBook);
+router.delete('/:id', isAuthenticated, booksController.deleteBook);
 
 module.exports = router;
