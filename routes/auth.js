@@ -17,13 +17,13 @@ router.get(
 
 // 👉 Ruta si falla la autenticación
 router.get('/github/failure', (req, res) => {
-  res.status(401).json({ message: 'Error de autenticación con GitHub' });
+  res.status(401).json({ message: 'GitHub authentication failed' });
 });
 
 // 👉 Ruta si tiene éxito la autenticación
 router.get('/github/success', (req, res) => {
   res.status(200).json({
-    message: 'Inicio de sesión exitoso con GitHub',
+    message: 'Successfully logged in with GitHub',
     user: req.user,
   });
 });
@@ -32,7 +32,7 @@ router.get('/github/success', (req, res) => {
 router.get('/logout', (req, res, next) => {
   req.logout(err => {
     if (err) return next(err);
-    res.json({ message: 'Sesión cerrada correctamente' });
+    res.json({ message:'Successfully logged out'});
   });
 });
 
