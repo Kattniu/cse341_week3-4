@@ -1,4 +1,4 @@
-### Obtener todos los libros
+###📌 Obtener todos los libros
 GET http://localhost:8080/api/books
 Accept: application/json
 
@@ -40,7 +40,7 @@ DELETE http://localhost:8080/api/books/:id
 
 ###
 
-### Obtener todas las categorías
+### 📌 Obtener todas las categorías
 GET http://localhost:8080/api/categories
 Accept: application/json
 
