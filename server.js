@@ -20,9 +20,13 @@ const app = express();
 // Middlewares generales
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:8080', 
+  origin: [
+    'http://localhost:8080', 
+    'https://cse341-week3-4-x3g1.onrender.com' // Mi dominio en producción
+  ],
   credentials: true
 }));
+
 
 // Configurar express-session (requerido para Passport)
 app.use(session({
